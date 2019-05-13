@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="HangmanApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hangman</title>
+    <link href="https://fonts.googleapis.com/css?family=Gugi|Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+</head>
+<body ng-controller="GameController">
+
+    <div class="modal" ng-show="modal">
+        <div class="modal-content">
+            <p class="modal-text">{{ modalText }}</p>
+            <button class="button-new-game" ng-click="reload()">Play again! <i class="fas fa-redo-alt retry-icon"></i></button>
+        </div>
+    </div>
+
+    <div class="main-container">
+
+        <h1 class="title">Hangman</h1>
+        <div class="content">    
+            <p class="word">{{ word }}</p>
+
+            <div class="images-container">
+                <img class="img" ng-src="{{ gif }}" alt="">
+            </div>
+            <div class="guesses-container">
+                <div class="correct-container">
+                    <p class="correct-word" ng-repeat="correct in correctLettersChosen track by $index">{{ correct }}</p>
+                </div>
+                <div class="guesses">{{ guesses }}</div>
+                <div class="incorrect-container">
+                    <p class="incorrect-word" ng-repeat="incorrect in incorrectLettersChosen track by $index">{{ incorrect }}</p>
+                </div>
+            </div>
+            <p class="temp-word">{{ tempWord }}</p>
+            <form class="form" ng-submit="choseLetter()">
+                <input class="form-input" type="text" ng-model="input.letter" maxlength="1">
+                <button class="form-button"><i class="fas fa-arrow-up"></i></button>
+            </form>
+            <div ng-show="error">
+                <p>{{ errorType }}</p>
+            </div>
+        </div>
+        
+    
+    </div>
+    
+
+    <!--Module-->
+    <script src="js/app.js"></script>
+
+    <!--Controller-->
+    <script src="js/controllers/game.controller.js"></script>
+
+    <!--Service-->
+    <script src="js/services/words.service.js"></script>
+    <script src="js/services/gif.service.js"></script>
+</body>
+</html>

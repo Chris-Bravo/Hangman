@@ -1,0 +1,204 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.main-container{
+    width: 100vw;
+    height: 100vh;
+    background-color: #011627;
+    color: #FDFFFC;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.title{
+    font-family: 'Gugi', cursive;
+    font-size: 42px;
+}
+
+.content{
+    font-family: 'Roboto', sans-serif;
+    margin: 20px 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.word{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.temp-word{
+    font-size: 36px;
+}
+.form{
+    display: flex;
+}
+.form-input{
+    font-family: 'Roboto', sans-serif;
+    font-size: 24px;
+    padding: 3px;
+    width: 100%;
+    text-align: center;
+}
+.form-button{
+    width: 50px;
+    background-color: #FF9F1C;
+    border: none;
+    font-size: 22px;
+    color: #842C00;
+    cursor: pointer;
+}
+.form-button:hover i{
+    transition: 0.5s;
+    transform: rotate(360deg);
+}
+.form-button:active {
+    transition: 0.3s;
+    transform: scale(1.1);
+}
+.correct-container{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+    justify-content: center;
+    align-items: center;
+}
+.incorrect-container{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+    justify-content: center;
+    align-items: center;
+}
+.correct-word{
+    border: 2px solid #25ad5a;
+    border-radius: 50%;
+    padding: 5px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.incorrect-word{
+    border: 2px solid #E71D36;
+    border-radius: 50%;
+    padding: 5px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.guesses-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+}
+.guesses{
+    border-radius: 50%;
+    border: 5px solid #2EC4B6;
+    padding: 20px;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 38px;
+    margin: 10px;
+    cursor: context-menu;
+}
+.guesses:hover{
+    animation-name: pulse;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes pulse {
+    0%{
+        transform: scale(1);
+    }
+    30%{
+        transform: scale(0.9);
+    }
+    60%{
+        transform: scale(1.1);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
+
+.modal{
+    font-family: 'Roboto', sans-serif;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgb(1, 22, 39, 0.5);
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal-content{
+    width: 100%;
+    max-width: 767px;
+    background-color: #FDFFFC;
+    border-radius: 3px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.modal-close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #FDFFFC;
+    cursor: pointer;
+    font-size: 32px;
+}
+
+.button-new-game {
+    background-color: #E71D36;
+    border: none;
+    font-size: 22px;
+    color: #FDFFFC;
+    cursor: pointer;
+    padding: 5px;
+}
+.button-new-game:active {
+    transition: 0.3s;
+    transform: scale(1.02);
+}
+.modal-text{
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.retry-icon{
+    animation-name: retry;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(.82,.15,0,1.08);
+}
+
+@keyframes retry{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
