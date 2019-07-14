@@ -10,12 +10,12 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
 </head>
-<body ng-controller="GameController">
+<body ng-controller="GameController as vm">
 
     <div class="modal" ng-show="modal">
         <div class="modal-content">
-            <p class="modal-text">{{ modalText }}</p>
-            <button class="button-new-game" ng-click="reload()">Play again! <i class="fas fa-redo-alt retry-icon"></i></button>
+            <p class="modal-text">{{ vm.modalText }}</p>
+            <button class="button-new-game" ng-click="vm.reload()">Play again! <i class="fas fa-redo-alt retry-icon"></i></button>
         </div>
     </div>
 
@@ -23,27 +23,27 @@
 
         <h1 class="title">Hangman</h1>
         <div class="content">    
-            <p class="word">{{ word }}</p>
+            <p class="word">{{ vm.word }}</p>
 
             <div class="images-container">
-                <img class="img" ng-src="{{ gif }}" alt="">
+                <img class="img" ng-src="{{ vm.gif }}" alt="">
             </div>
             <div class="guesses-container">
                 <div class="correct-container">
-                    <p class="correct-word" ng-repeat="correct in correctLettersChosen track by $index">{{ correct }}</p>
+                    <p class="correct-word" ng-repeat="correct in vm.correctLettersChosen track by $index">{{ correct }}</p>
                 </div>
-                <div class="guesses">{{ guesses }}</div>
+                <div class="guesses">{{ vm.guesses }}</div>
                 <div class="incorrect-container">
-                    <p class="incorrect-word" ng-repeat="incorrect in incorrectLettersChosen track by $index">{{ incorrect }}</p>
+                    <p class="incorrect-word" ng-repeat="incorrect in vm.incorrectLettersChosen track by $index">{{ incorrect }}</p>
                 </div>
             </div>
-            <p class="temp-word">{{ tempWord }}</p>
-            <form class="form" ng-submit="choseLetter()">
-                <input class="form-input" type="text" ng-model="input.letter" maxlength="1">
+            <p class="temp-word">{{ vm.tempWord }}</p>
+            <form class="form" ng-submit="vm.choseLetter()">
+                <input class="form-input" type="text" ng-model="vm.input.letter" maxlength="1">
                 <button class="form-button"><i class="fas fa-arrow-up"></i></button>
             </form>
             <div ng-show="error">
-                <p>{{ errorType }}</p>
+                <p>{{ vm.errorType }}</p>
             </div>
         </div>
         
@@ -57,7 +57,7 @@
     <!--Controller-->
     <script src="js/controllers/game.controller.js"></script>
 
-    <!--Service-->
+    <!--Services-->
     <script src="js/services/words.service.js"></script>
     <script src="js/services/gif.service.js"></script>
 </body>

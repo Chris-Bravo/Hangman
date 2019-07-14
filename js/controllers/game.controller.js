@@ -1,141 +1,143 @@
-app.controller('GameController', ['$scope','wordService','gifService', '$timeout', function($scope, wordService, gifService, $timeout) {
+angular
+    .module('HangmanApp')
+    .controller('GameController', ['$scope','wordService','gifService', '$timeout', function($scope, wordService, gifService, $timeout) {
 
-    $scope.input = {};
-    $scope.choseLetter = choseLetter;
-    $scope.closeModal = closeModal;
-    $scope.reload = reload;
+        this.input = {};
+        this.choseLetter = choseLetter;
+        this.closeModal = closeModal;
+        this.reload = reload;
 
-    //Get Word from Wordnik API
+        //Get Word from Wordnik API
 
-    wordService
-        .then(function(word) {
-            $scope.word = word;
-            
-            //Get Gif from Giphy API
-            
-            gifService.getGif(word)
-                .then(function(img) {
+        wordService
+            .then(function(word) {
+                this.word = word;
+                
+                //Get Gif from Giphy API
+                
+                gifService.getGif(word)
+                    .then(function(img) {
 
-                    //Giphy API returns array without data :/
-                    if(img.data.data.length === 0){
-                        $scope.word = '';
-                        newModal();
+                        //Giphy API returns array without data :/
+                        if(img.data.data.length === 0){
+                            this.word = '';
+                            newModal();
 
-                    } else {
-                        $scope.gif = img.data.data[0].images.fixed_width.url; 
-                        newGame();
-                    }
+                        } else {
+                            this.gif = img.data.data[0].images.fixed_width.url; 
+                            newGame();
+                        }
 
-                }).catch(function (err) {
-                    console.log(err)
-                })
-        })
-        .catch(function(err){
-            console.error(err);
-        })
-
-    function newGame() {
-
-        $scope.incorrectLettersChosen = [];
-        $scope.correctLettersChosen = [];
-        $scope.guesses = 6;
-        $scope.tempWord = $scope.word
-            .split('')
-            .map(function (letter){
-                return letter = 'x';
+                    }).catch(function (err) {
+                        console.log(err)
+                    })
             })
-            .join('');
+            .catch(function(err){
+                console.error(err);
+            })
 
-    }
+        function newGame() {
 
-    function choseLetter() {
+            this.incorrectLettersChosen = [];
+            this.correctLettersChosen = [];
+            this.guesses = 6;
+            this.tempWord = this.word
+                .split('')
+                .map(function (letter){
+                    return letter = 'x';
+                })
+                .join('');
 
-        if($scope.tempWord.indexOf($scope.input.letter) >= 0){
-            $scope.error = true;
-            $scope.errorType = 'Enter a new letter';
-            $scope.input.letter = '';
-
-            
-            $timeout(function(){
-                $scope.error = false;
-            }, 2000)
-
-            return;
         }
 
-        if($scope.input.letter.trim() === ''){
-            
-            $scope.error = true;
-            $scope.errorType = 'Enter a letter';
-            $scope.input.letter = '';
+        function choseLetter() {
 
-            $timeout(function(){
-                $scope.error = false;
-            }, 2000)
+            if(this.tempWord.indexOf(this.input.letter) >= 0){
+                this.error = true;
+                this.errorType = 'Enter a new letter';
+                this.input.letter = '';
 
-            return;
-        }
+                
+                $timeout(function(){
+                    this.error = false;
+                }, 2000)
 
-        $scope.input.letter = $scope.input.letter.toLowerCase();
-
-        if($scope.word.toLowerCase().indexOf($scope.input.letter) >= 0) {
-
-            $scope.correctLettersChosen.push($scope.input.letter);
-
-            var index = $scope.word.toLowerCase().indexOf($scope.input.letter);
-
-            $scope.tempWord = $scope.tempWord.split('')
-            $scope.tempWord.splice(index, 1, $scope.input.letter)
-            $scope.tempWord = $scope.tempWord.join('')
-            
-            while (index !== -1) {
-
-                index = $scope.word.toLowerCase().indexOf($scope.input.letter, index + 1);
-
-                if (index >= 0){
-                    $scope.tempWord = $scope.tempWord.split('')
-                    $scope.tempWord.splice(index, 1, $scope.input.letter)
-                    $scope.tempWord = $scope.tempWord.join('')
-                }
-                if($scope.tempWord.indexOf('x') === -1){
-                    newModal('win');
-                }
-            
+                return;
             }
 
-            
-        }
-        else if($scope.word.toLowerCase().indexOf($scope.input.letter) < 0) {
-            $scope.incorrectLettersChosen.push($scope.input.letter);
-            $scope.guesses--;
+            if(this.input.letter.trim() === ''){
+                
+                this.error = true;
+                this.errorType = 'Enter a letter';
+                this.input.letter = '';
 
-            if($scope.guesses === 0){
-                newModal('lose')
+                $timeout(function(){
+                    this.error = false;
+                }, 2000)
+
+                return;
             }
+
+            this.input.letter = this.input.letter.toLowerCase();
+
+            if(this.word.toLowerCase().indexOf(this.input.letter) >= 0) {
+
+                this.correctLettersChosen.push(this.input.letter);
+
+                var index = this.word.toLowerCase().indexOf(this.input.letter);
+
+                this.tempWord = this.tempWord.split('')
+                this.tempWord.splice(index, 1, this.input.letter)
+                this.tempWord = this.tempWord.join('')
+                
+                while (index !== -1) {
+
+                    index = this.word.toLowerCase().indexOf(this.input.letter, index + 1);
+
+                    if (index >= 0){
+                        this.tempWord = this.tempWord.split('')
+                        this.tempWord.splice(index, 1, this.input.letter)
+                        this.tempWord = this.tempWord.join('')
+                    }
+                    if(this.tempWord.indexOf('x') === -1){
+                        newModal('win');
+                    }
+                
+                }
+
+                
+            }
+            else if(this.word.toLowerCase().indexOf(this.input.letter) < 0) {
+                this.incorrectLettersChosen.push(this.input.letter);
+                this.guesses--;
+
+                if(this.guesses === 0){
+                    newModal('lose')
+                }
+            }
+            this.input.letter = '';
         }
-        $scope.input.letter = '';
-    }
 
-    function closeModal() {
-        $scope.modal = false;
-    }
-
-    function newModal(type){
-        $scope.modal = true;
-
-        if(type === 'win'){
-            $scope.modalText = '🏆 You Win! 🏆'
-        } else if(type === 'lose'){
-            $scope.modalText = '😔 You Lose! 😔'
-        } else {
-            $scope.modalText = '😅 something bad happened 😅'
+        function closeModal() {
+            this.modal = false;
         }
 
-    }
+        function newModal(type){
+            this.modal = true;
 
-    function reload(){
-        location.reload();
-    }
+            if(type === 'win'){
+                this.modalText = '🏆 You Win! 🏆'
+            } else if(type === 'lose'){
+                this.modalText = '😔 You Lose! 😔'
+            } else {
+                this.modalText = '😅 something bad happened 😅'
+            }
+
+        }
+
+        function reload(){
+            location.reload();
+        }
 
 
 
